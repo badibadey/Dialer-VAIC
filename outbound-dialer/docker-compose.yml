@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  dialer_app_client:
+    build: ./client
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    environment:
+      DIALER_CLIENT_PORT: ${DIALER_CLIENT_PORT}
+      REACT_APP_DIALER_SERVER_HOST: ${REACT_APP_DIALER_SERVER_HOST}
+      REACT_APP_DIALER_SERVER_PORT: ${REACT_APP_DIALER_SERVER_PORT}
+
+  dialer_app_server:
+    build: ./server
+    restart: always
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app
+    environment:
+      DIALER_SERVER_PORT: ${DIALER_SERVER_PORT}
+      DIALER_SERVER_NOTIFY: ${DIALER_SERVER_NOTIFY}
+
+networks:
+  local:
+    driver: bridge
